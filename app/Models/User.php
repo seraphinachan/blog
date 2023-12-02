@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Role;
+use App\Models\Post;
 
 class User extends Authenticatable
 {
@@ -30,8 +31,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role() 
+    public function role()
     {
     return $this->belongsTo(Role::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
