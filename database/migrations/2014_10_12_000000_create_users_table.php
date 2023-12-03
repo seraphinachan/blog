@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('status')->default(1);
 
             $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('users');
+            $table->foreign('role_id')->references('id')->on('roles');
 
             $table->rememberToken();
             $table->timestamps();
