@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Comment;
+use App\Models\Image;
 
 class Post extends Model
 {
@@ -34,5 +35,10 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

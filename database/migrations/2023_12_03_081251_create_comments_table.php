@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('the_comment');
-            $table->string('post_id');
-            $table->string('user_id');
+            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('user_id');
 
-            $table->timestamps();
+            $table->timestamps();s
         });
     }
 
