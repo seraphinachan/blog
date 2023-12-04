@@ -13,9 +13,18 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
             $table->string('name');
             $table->string('extension');
             $
+=======
+            $table->string('extension');
+            $table->string('path');
+
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_id');
+            
+>>>>>>> fb8e399f59bfec42621b050bf4500d4eaa430112
             $table->timestamps();
         });
     }
