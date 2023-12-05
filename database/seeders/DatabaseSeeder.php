@@ -17,6 +17,12 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         \App\Models\User::truncate();
         \App\Models\Role::truncate();
+
+        \App\Models\Category::truncate();
+        \App\Models\Post::truncate();
+
+        \App\Models\Comment::truncate();
+
         Schema::enableForeignKeyConstraints();
 
         // Create roles and users
@@ -25,6 +31,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Category::factory(10)->create();
         \App\Models\Post::factory(100)->create();
+        \App\Models\Comment::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
