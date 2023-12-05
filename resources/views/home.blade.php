@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-8 posts-col">
 
-            @foreach($posts as $post)
+            @forelse($posts as $post)
 
                 <div class="block-21 d-flex animate-box post">
                 <a href="#" class="blog-img" style="background-image: url({{ asset('storage/' . $post->image->path.'') }});"></a>
@@ -27,8 +27,12 @@
                     </div>
                 </div>
             </div>
+            @empty
+            <p class="lead">표시할 게시물이 없습니다.</p>
 
-            @endforeach
+            @endforelse
+
+            {{ $posts->links() }}
 
             </div>
 
