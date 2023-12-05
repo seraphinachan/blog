@@ -12,7 +12,7 @@
             @foreach($posts as $post)
 
                 <div class="block-21 d-flex animate-box post">
-                <a href="#" class="blog-img" style="background-image: url(blog_template/images/blog-6.jpg);"></a>
+                <a href="#" class="blog-img" style="background-image: url({{ asset('storage/' . $post->image->path.'') }});"></a>
                 <div class="text">
                     <h3 class="heading"><a href="#">{{ $post->title }}</a></h3>
                     <p class="excerpt">{{ $post->excerpt }}</p>

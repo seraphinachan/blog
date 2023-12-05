@@ -16,12 +16,23 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
+        $fake_images = [
+          '1.jpg',
+          '2.jpg',
+          '3.jpg',
+          '4.jpg',
+          '5.jpg',
+          '6.jpg',
+          '7.jpg',
+          '8.jpg',
+          '9.jpg',
+          '10.jpg',
+        ];
+
         return [
             'name' => $this->faker->word(),
             'extension' => 'jpg',
-            'path' => '/public/images/' . $this->faker->word() . '.' . 'jpg',
-            'imageable_id' => 1,
-            'imageable_type' => 'App\Models\Post',
+            'path' => 'images/' . $this->faker->randomElement($fake_images),
         ];
     }
 }
