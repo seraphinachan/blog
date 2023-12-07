@@ -9,25 +9,34 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Test extends Mailable
+class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $username;
-    public function __construct($username)
+    public $firstname;
+    public $lastname;
+    public $email;
+    public $subject;
+    public $message;
+
+    public function __construct($firstname, $lastname, $email, $subject, $message)
     {
-        $this->username = $username;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->email = $email;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     public function build()
     {
-      return $this->from('contact@blog.com', 'Contact')->view('emails.test');
+        return $this->markdown('emails.contact');
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Test',
+            subject: 'Contact Mail',
         );
     }
 
@@ -37,7 +46,7 @@ class Test extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.contact',
         );
     }
 
