@@ -6,7 +6,6 @@ use App\Mail\ContactMail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactMail;
 
 class ContactController extends Controller
 {
@@ -17,6 +16,10 @@ class ContactController extends Controller
 
     public function store()
     {
+      $data = array();
+      $data['name'] = "Youngrong";
+      return response()->json($data);
+
       $attributes = request()->validate([
         'first_name' => 'required',
         'last_name' => 'required',
@@ -27,7 +30,7 @@ class ContactController extends Controller
 
       Contact::create($attributes);
 
-      Mail::to("jiyeonyee0312@gmail.com")->send(new ContactMail(
+      Mail::to( env('ADMIN_EMAIL') )->send(new ContactMail(
         $attributes['first_name'],
         $attributes['last_name'],
         $attributes['email'],

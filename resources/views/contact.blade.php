@@ -35,11 +35,11 @@
 					</div>
 
 					<div class="col-md-6">
-						<form autocomplete="off" action="POST" action="{{ route('contact.store') }}">
+						<form onsubmit="return false;" autocomplete="off" action="POST">
               @csrf
 							<div class="row form-group">
 								<div class="col-md-6">
-                  <x-blog.form.input value='{{ old("first_name") }} placeholder='성' name="first_name" />
+                  <x-blog.form.input value='{{ old("first_name") }}' placeholder='성' name="first_name" />
 								</div>
 								<div class="col-md-6">
 									<x-blog.form.input value='{{ old("last_name") }}' placeholder='이름' name="last_name" />
@@ -64,7 +64,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<input type="submit" value="Send Message" class="btn btn-primary">
+								<input type="submit" value="Send Message" class="btn btn-primary send-message-btn">
 							</div>
 						</form>
 
@@ -77,5 +77,46 @@
 				</div>
 			</div>
 		</div>
+
+@endsection
+
+@section('custom_js')
+
+<script>
+  $(document).on("click", '.send-message-btn', (e) => {
+    e.preventDefault();
+
+    let $this = e.target;
+
+    let csrf_token = $(this).parents("form").find("input[name='_token']").val()
+    let first_name = $(this).parents("form").find("input[name='first_name']").val()
+    let last_name = $(this).parents("form").find("input[name='last_name']").val()
+    let email = $(this).parents("form").find("input[name='email']").val()
+    let subject = $(this).parents("form").find("input[name='subject']").val()
+    let message = $(this).parents("form").find("textarea[name='message']").val()
+
+    let formData = new FormData();
+    formData.append('_token', csrf_token);
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('email', email);
+    formData.append('subject', subject);
+    formData.append('message', message);
+
+    console.log( csrf_token )
+
+    $.ajax({
+      url: "{{ route('contact.store') }}",
+      data: formData,
+      type: 'POST',
+      dataType: 'JSON',
+      processData: false,
+      contentType: false,
+      success: function(data){
+        console.log(data);
+      }
+    })
+  })
+</script>
 
 @endsection
