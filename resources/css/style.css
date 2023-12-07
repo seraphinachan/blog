@@ -5,6 +5,7 @@
     min-width: 500px;
     border-radius: 50px;
     color: #fff;
+    z-index: 2;
 }
 
 .global-message.info {

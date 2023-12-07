@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
 use App\Models\Contact;
+// use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
@@ -17,27 +20,41 @@ class ContactController extends Controller
     public function store()
     {
       $data = array();
-      $data['name'] = "Youngrong";
-      return response()->json($data);
-
-      $attributes = request()->validate([
+      $data['success'] = 0;
+      $data['errors'] = [];
+      $rules = [
         'first_name' => 'required',
         'last_name' => 'required',
         'email' => 'required',
         'subject' => 'nullable|min:5|max:50',
         'message' => 'required|min:5|max:500',
-      ]);
+      ];
 
-      Contact::create($attributes);
+      $validated = Validator::make(request()->all(), $rules);
 
-      Mail::to( env('ADMIN_EMAIL') )->send(new ContactMail(
-        $attributes['first_name'],
-        $attributes['last_name'],
-        $attributes['email'],
-        $attributes['subject'],
-        $attributes['message']
-      ));
+      if($validated->fail())
+      {
+        $data['errors']['first_name'] = $validated->errors()->first('first_name');
+        $data['errors']['last_name'] = $validated->errors()->first('last_name');
+        $data['errors']['email'] = $validated->errors()->first('email');
+        $data['errors']['subject'] = $validated->errors()->first('subject');
+        $data['errors']['message'] = $validated->errors()->first('message');
+      }
+      else
+      {
+        $attributes = $validated->validated();
+        Contact::create($attributes);
 
-      return redirect()->route('contact.create')->with('success', '내용이 전달되었습니다.')
+        Mail::to( env('ADMIN_EMAIL') )->send(new ContactMail(
+            $attributes['first_name'],
+            $attributes['last_name'],
+            $attributes['email'],
+            $attributes['subject'],
+            $attributes['message']
+          ));
+          $data['success'] = 1;
+          $data['message'] = '문의해 주셔서 감사합니다.';
+      }
+        return response()->json($data);
     }
 }
