@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Test;
 
 class ContactController extends Controller
 {
@@ -23,6 +25,8 @@ class ContactController extends Controller
           'message' => 'required|min:5|max:500',
         ])
       );
+
+      Mail::to("jiyeonyee0312@gmail.com")->send(new Test("Youngrong"));
 
       return redirect()->route('contact.create')->with('success', '내용이 전달되었습니다.')
     }
