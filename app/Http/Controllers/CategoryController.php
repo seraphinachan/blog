@@ -13,6 +13,9 @@ class CategoryController extends Controller
     public function index()
     {
       // view all categories in the blog
+      return view('categories.index', [
+        'categories' => Category::withCount('posts')->get()
+      ]);
     }
 
     public function show(Category $category)

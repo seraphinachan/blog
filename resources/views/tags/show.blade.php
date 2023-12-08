@@ -1,6 +1,6 @@
 @extends('main_layouts.master')
 
-@section('title', $category->name . ' Category | Blog')
+@section('title', $tag->name . ' Tag | Blog')
 
 @section('content')
 
@@ -28,7 +28,7 @@
                 </div>
             </div>
             @empty
-            <p class="lead">카테고리와 관련된 게시물이 없습니다.</p>
+            <p class="lead">태그와 관련된 게시물이 없습니다.</p>
 
             @endforelse
 
@@ -52,5 +52,3 @@
     </div>
 </div>
 @endsection
-
-
