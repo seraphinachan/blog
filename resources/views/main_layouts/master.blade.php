@@ -45,7 +45,7 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="{{ asset('blog_template/css/style.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 	<!-- Modernizr JS -->
 	<script src="{{ asset('blog_template/js/modernizr-2.6.2.min.js') }}"></script>
@@ -75,9 +75,9 @@
 								<li class="has-dropdown">
 									<a href="{{ route('categories.index') }}">Categories</a>
 									<ul class="dropdown">
-                    @foreach($navbar_categories as $category)
+                                    @foreach($navbar_categories as $category)
 										<li><a href="{{ route('categories.show', $category) }}">{{ $category->name }}</a></li>
-                    @endforeach
+                                    @endforeach
 									</ul>
 								</li>
 								<li><a href="{{ route('about') }}">About</a></li>

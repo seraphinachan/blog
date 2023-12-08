@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
       Paginator::useBootstrapFive();
       Paginator::useBootstrapFour();
 
-      $categories = Category::withCount('posts')->sortBy('posts_count', 'DESC')->take(10)->get();
-      View::share('nabbar-categories', $categories);
+      $categories = Category::withCount('posts')->orderBy('posts_count', 'DESC')->take(10)->get();
+      View::share('navbar_categories', $categories);
     }
 }
