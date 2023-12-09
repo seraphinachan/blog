@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
       // view all categories in the blog
       return view('categories.index', [
-        'categories' => Category::withCount('posts')->get()
+        'categories' => Category::withCount('posts')->paginate(5)
       ]);
     }
 
