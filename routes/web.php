@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminControllers\DashboardController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Front User Routes
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/{post:slug}', [PostsController::class, 'show'])->name('posts.show');
@@ -36,3 +40,7 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/Tags/{tag:name}', [TagController::class, 'show'])->name('tags.show');
 
 require __DIR__.'/auth.php';
+
+// Admin Dashboard Routes
+
+Route::get('admin', [DashboardController::class, 'index'])->name('admin.index');
