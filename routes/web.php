@@ -43,4 +43,6 @@ require __DIR__.'/auth.php';
 
 // Admin Dashboard Routes
 
-Route::get('admin', [DashboardController::class, 'index'])->name('admin.index');
+Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+});

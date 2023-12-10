@@ -23,4 +23,9 @@ class Category extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function random()
+    {
+        return self::inRandomOrder()->first();
+    }
 }
