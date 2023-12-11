@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminControllers\DashboardController;
+use App\Http\Controllers\AdminControllers\AdminPostsController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
@@ -44,5 +45,8 @@ require __DIR__.'/auth.php';
 // Admin Dashboard Routes
 
 Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function(){
+
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+    Route::resource('posts', AdminPostsController::class);
 });
