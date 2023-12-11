@@ -16,7 +16,7 @@ class AdminPostsController extends Controller
         'slug' => 'required|max:200',
         'excerpt' => 'required|max:1000',
         'category_id' => 'required|numeric',
-        'thumbnail' => 'required|file|mimes:jpg,png,webp,svg,jpeg',
+        'thumbnail' => 'required|file|mimes:jpg,png,webp,svg,jpeg|dimensions:max_width=300,max_height=225',
         'body' => 'required',
     ];
 
@@ -33,7 +33,7 @@ class AdminPostsController extends Controller
             'categories' => Category::pluck('name', 'id')
         ]);
     }
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
@@ -60,7 +60,7 @@ class AdminPostsController extends Controller
             $tag_ob = Tag::create(['name' => trim($tag)]);
             $tags_ids[] = $tag_ob->id;
         }
-        
+
         if(count($tags_ids) > 0)
             $post->tags()->sync( $tags_ids );
 
@@ -71,7 +71,7 @@ class AdminPostsController extends Controller
     {
         //
     }
-    
+
     public function edit(Post $post)
     {
         $tags = '';
@@ -81,14 +81,14 @@ class AdminPostsController extends Controller
             if($key !== count($post->tags) - 1)
                 $tags .= ', ';
         }
-        
+
         return view('admin_dashboard.posts.edit', [
             'post' => $post,
             'tags' => $tags,
             'categories' => Category::pluck('name', 'id')
         ]);
     }
-    
+
     public function update(Request $request, Post $post)
     {
         $this->rules['thumbnail'] = 'nullable|file|mimes:jpg,png,webp,svg,jpeg|dimensions:max_width=800,max_height=300';
@@ -121,10 +121,10 @@ class AdminPostsController extends Controller
                 $tags_ids[] = $tag_ob->id;
             }
         }
-        
+
         if(count($tags_ids) > 0)
             $post->tags()->syncWithoutDetaching( $tags_ids );
-        
+
 
         return redirect()->route('admin.posts.edit', $post)->with('success', 'Post has been updated.');
     }
