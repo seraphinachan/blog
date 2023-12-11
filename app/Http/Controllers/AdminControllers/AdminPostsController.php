@@ -64,7 +64,7 @@ class AdminPostsController extends Controller
         if(count($tags_ids) > 0)
             $post->tags()->sync( $tags_ids );
 
-        return redirect()->route('admin.posts.create')->with('success', 'Post has been created.');
+        return redirect()->route('admin.posts.create')->with('success', '게시물이 등록되었습니다.');
     }
 
     public function show($id)
@@ -126,13 +126,13 @@ class AdminPostsController extends Controller
             $post->tags()->syncWithoutDetaching( $tags_ids );
 
 
-        return redirect()->route('admin.posts.edit', $post)->with('success', 'Post has been updated.');
+        return redirect()->route('admin.posts.edit', $post)->with('success', '게시물이 수정되었습니다.');
     }
 
     public function destroy(Post $post)
     {
         $post->tags()->delete();
         $post->delete();
-        return redirect()->route('admin.posts.index')->with('success', 'Post has been Deleted.');
+        return redirect()->route('admin.posts.index')->with('success', '게시물이 삭제되었습니다.');
     }
 }
