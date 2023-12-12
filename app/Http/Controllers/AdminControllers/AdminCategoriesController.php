@@ -32,7 +32,7 @@ class AdminCategoriesController extends Controller
         $validated['user_id'] = auth()->id();
         Category::create($validated);
 
-        return redirect()->route('admin.categories.create')->with('success', 'Category has been Created.');
+        return redirect()->route('admin.categories.create')->with('success', '카테고리가 등록되었습니다.');
     }
 
     public function show(Category $category)
@@ -56,7 +56,7 @@ class AdminCategoriesController extends Controller
         
         $category->update($validated);
 
-        return redirect()->route('admin.categories.edit', $category)->with('success', 'Category has been Updated.');
+        return redirect()->route('admin.categories.edit', $category)->with('success', '카테고리가 수정되었습니다.');
     }
 
     public function destroy(Category $category)
@@ -69,6 +69,6 @@ class AdminCategoriesController extends Controller
         $category->posts()->update(['category_id' => $default_category_id]);
 
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Category has been Deleted.');
+        return redirect()->route('admin.categories.index')->with('success', '카테고리가 삭제되었습니다.');
     }
 }
