@@ -57,32 +57,35 @@
 										<td>{{ $post->title }} </td>
 
 										<td>{{ $post->excerpt }}</td>
-                                        <td>{{ $post->category->name }}</td>
-                                        <td>{{ $post->created_at->diffForHumans() }}</td>
+                    <td>{{ $post->category->name }}</td>
+                    <td>{{ $post->created_at->diffForHumans() }}</td>
 
 
-                                        <td>
-                                            <div class="badge rounded-pill @if($post->status === 'published') {{ 'text-info bg-light-info' }} @elseif($post->status === 'draft') {{ 'text-warning bg-light-warning' }} @else {{ 'text-danger bg-light-danger' }} @endif p-2 text-uppercase px-3"><i class='bx bxs-circle align-middle me-1'></i>{{ $post->status }}</div>
-                                        </td>
+                    <td>
+                        <div class="badge rounded-pill @if($post->status === 'published') {{ 'text-info bg-light-info' }} @elseif($post->status === 'draft') {{ 'text-warning bg-light-warning' }} @else {{ 'text-danger bg-light-danger' }} @endif p-2 text-uppercase px-3"><i class='bx bxs-circle align-middle me-1'></i>{{ $post->status }}</div>
+                    </td>
 
-                                        <td>{{ $post->views }}</td>
+                    <td>{{ $post->views }}</td>
 
-                                        <td>
+                    <td>
 											<div class="d-flex order-actions">
 												<a href="{{ route('admin.posts.edit', $post) }}" class=""><i class='bx bxs-edit'></i></a>
 												<a href="#" onclick="event.preventDefault(); document.getElementById('delete_form_{{ $post->id }}').submit();" class="ms-3"><i class='bx bxs-trash'></i></a>
 
-                                                <form method='post' action="{{ route('admin.posts.destroy', $post) }}" id='delete_form_{{ $post->id }}'>@csrf @method('DELETE')</form>
-                                            </div>
+                          <form method='post' action="{{ route('admin.posts.destroy', $post) }}" id='delete_form_{{ $post->id }}'>@csrf @method('DELETE')</form>
+                      </div>
 										</td>
 									</tr>
-                                    @endforeach
+                  @endforeach
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 
+        <div class="mt-4">
+          {{ $categories->links() }}
+        </div>
 
 			</div>
 		</div>

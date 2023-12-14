@@ -29,13 +29,19 @@ class DatabaseSeeder extends Seeder
         // Create roles and users
         \App\Models\Role::factory(1)->create();
         \App\Models\Role::factory(1)->create(['name' => 'admin']);
+
         $users = \App\Models\User::factory(10)->create();
+        \App\Models\User::factory()->create([
+          'name' => 'youngrong',
+          'email' => 'jiyeonyee0312@gmail.com',
+          'role_id' => 2]);
 
         foreach ($users as $user) {
           $user->image()->save(\App\Models\Image::factory()->make());
         }
 
         \App\Models\Category::factory(10)->create();
+        \App\Models\Category::factory()->create(['name' => 'Uncategorized']);
 
         $posts = \App\Models\Post::factory(50)->create();
 
