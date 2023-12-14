@@ -93,6 +93,11 @@
                                         </div>
 
                                         <div class="mb-3">
+                                          <label class="form-label">Basic</label>
+                                          <input type="text" class="form-control" data-role="tagsinput" value="jQuery, Script, Net">
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label class="form-label">Post Tags</label>
                                             <input type="text" class="form-control" name='tags' data-role="tagsinput">
                                         </div>
