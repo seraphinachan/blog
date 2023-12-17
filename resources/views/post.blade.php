@@ -21,7 +21,7 @@
                 <div class="row row-pb-lg">
                     <div class="col-md-12 animate-box">
                         <div class="classes class-single">
-                            <div class="classes-img" style="background-image: url(blog_template/images/classes-1.jpg);">
+                            <div class="classes-img" style="background-image: url({{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/thumbnail_placeholder.svg' . '')  }});">
                             </div>
                             <div class="desc desc2">
                                 {!! $post->body !!}
