@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Post;
+use App\Models\Comment;
 
 class AdminCommentsController extends Controller
 {
@@ -22,7 +23,7 @@ class AdminCommentsController extends Controller
     public function create()
     {
         return view('admin_dashboard.comments.edit', [
-            'posts' => Post::pluck('id', 'title')
+            'posts' => Post::pluck('title', 'id')
         ]);
     }
 
@@ -31,7 +32,15 @@ class AdminCommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'post_id' => 'required|numeric',
+            'the_comment' => 'required|min:3|max:1000'
+        ];
+        $validated = $request->validate($rules);
+        $validated['user_id'] = auth()->id();
+
+        Comment::create($validated);
+        return redirect()->route('admin.comments.create')->with('success', '댓글이 등록되었습니다.');
     }
 
     /**
@@ -53,9 +62,17 @@ class AdminCommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $rules = [
+            'post_id' => 'required|numeric',
+            'the_comment' => 'required|min:3|max:1000'
+        ];
+        $validated = $request->validate($rules);
+        $validated['user_id'] = auth()->id();
+
+        $comment->update($validated);
+        return redirect()->route('admin.comments.create')->with('success', '댓글이 등록되었습니다.');
     }
 
     /**
