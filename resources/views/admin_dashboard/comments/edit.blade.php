@@ -1,4 +1,3 @@
-
 @extends("admin_dashboard.layouts.app")
 
 @section("style")

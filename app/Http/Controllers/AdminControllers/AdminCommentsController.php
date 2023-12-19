@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Post;
@@ -16,7 +17,9 @@ class AdminCommentsController extends Controller
 
     public function index()
     {
-        //
+        return view('admin_dashboard.comments.index', [
+            'comments' => Comment::latest()->paginate(50)
+        ]);
     }
 
     public function create()
@@ -35,11 +38,6 @@ class AdminCommentsController extends Controller
         return redirect()->route('admin.comments.create')->with('success', '댓글이 등록되었습니다.');
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(Comment $comment)
     {
         return view('admin_dashboard.categories.edit', [
@@ -52,7 +50,7 @@ class AdminCommentsController extends Controller
     {
         $validated = $request->validate($this->rules);
         $comment->update($validated);
-        return redirect()->route('admin.comments.update', $comment)->with('success', '댓글이 수정되었습니다.');
+        return redirect()->route('admin.comments.edit', $comment)->with('success', '댓글이 수정되었습니다.');
     }
 
     public function destroy(Comment $comment)
