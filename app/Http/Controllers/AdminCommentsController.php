@@ -9,17 +9,16 @@ use App\Models\Comment;
 
 class AdminCommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $rules = [
+        'post_id' => 'required|numeric',
+        'the_comment' => 'required|min:3|max:1000'
+    ];
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin_dashboard.comments.edit', [
@@ -27,59 +26,38 @@ class AdminCommentsController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $rules = [
-            'post_id' => 'required|numeric',
-            'the_comment' => 'required|min:3|max:1000'
-        ];
-        $validated = $request->validate($rules);
+        $validated = $request->validate($this->rules);
         $validated['user_id'] = auth()->id();
 
         Comment::create($validated);
         return redirect()->route('admin.comments.create')->with('success', '댓글이 등록되었습니다.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Comment $comment)
     {
-        //
+        return view('admin_dashboard.categories.edit', [
+            'posts' => Post::pluck('title', 'id'),
+            'comment' => $comment
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Comment $comment)
     {
-        $rules = [
-            'post_id' => 'required|numeric',
-            'the_comment' => 'required|min:3|max:1000'
-        ];
-        $validated = $request->validate($rules);
-        $validated['user_id'] = auth()->id();
-
+        $validated = $request->validate($this->rules);
         $comment->update($validated);
-        return redirect()->route('admin.comments.create')->with('success', '댓글이 등록되었습니다.');
+        return redirect()->route('admin.comments.update', $comment)->with('success', '댓글이 수정되었습니다.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return redirect()->route('admin.comments.index')->with('success', '댓글이 삭제되었습니다.');
     }
 }
