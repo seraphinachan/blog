@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Support\Facades\Route;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -29,6 +31,13 @@ class DatabaseSeeder extends Seeder
         // Create roles and users
         \App\Models\Role::factory(1)->create();
         \App\Models\Role::factory(1)->create(['name' => 'admin']);
+
+        $blog_routes = Route::getRoutes();
+        foreach($blog_routes as $route)
+        {
+            if(strpos($route->getName(), 'admin') !== false)
+                \App\Models\Permission::create(['name' => $route->getName()]);
+        }
 
         $users = \App\Models\User::factory(10)->create();
         \App\Models\User::factory()->create([
