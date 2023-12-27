@@ -49,7 +49,7 @@ require __DIR__.'/auth.php';
 
 // Admin Dashboard Routes
 
-Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function(){
+Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin', 'check_permissions')->group(function(){
 
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::post('upload_tinymce_image', [TinyMCEController::class, 'upload_tinymce_image'])->name('upload_tinymce_image');
