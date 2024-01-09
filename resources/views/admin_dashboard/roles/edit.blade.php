@@ -33,11 +33,12 @@
 
             <div class="card">
                 <div class="card-body p-4">
-                    <h5 class="card-title">Add New Role</h5>
+                    <h5 class="card-title">Edit Role: {{ $role->name }}</h5>
                     <hr/>
 
-                    <form action="{{ route('admin.roles.store') }}" method='post'>
+                    <form action="{{ route('admin.roles.update', $role) }}" method='post'>
                         @csrf
+                        @method('PATCH')
 
                         <div class="form-body mt-4">
                             <div class="row">
@@ -45,7 +46,7 @@
                                     <div class="border border-3 p-4 rounded">
                                         <div class="mb-3">
                                             <label for="inputProductTitle" class="form-label">Role Name</label>
-                                            <input type="text" value='{{ old("name") }}' name='name' required class="form-control" id="inputProductTitle">
+                                            <input type="text" value='{{ old("name", $role->name) }}' name='name' required class="form-control" id="inputProductTitle">
 
                                             @error('name')
                                                 <p class='text-danger'>{{ $message }}</p>
@@ -70,7 +71,7 @@
 
                                                     @for ($i = $start; $i < $end; $i++)
                                                         <label class="permission">
-                                                            <input type="checkbox" name="permissions" value="{{ $permissions[$i]->id }}">{{ $permissions[$i]->name }}
+                                                            <input {{ $role->permissions->contains( $permissions[$i]->id ) ? 'checked' : '' }} type="checkbox" name="permissions" value="{{ $permissions[$i]->id }}">{{ $permissions[$i]->name }}
                                                         </label>
                                                     @endfor
 
@@ -82,13 +83,23 @@
                                             </div>
                                         </div>
 
-                                        <button class='btn btn-primary' type='submit'>Add Role</button>
+                                        <button class='btn btn-primary' type='submit'>Update Role</button>
+
+                                        <a 
+                                        class='btn btn-danger'
+                                        onclick="event.preventDefault();document.getElementById('delete_role_{{ $role->id }}').submit()"
+                                        href="#">Delete Role</a>
 
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+                    </form>
+
+                    <form id='delete_role_{{ $role->id }}' method='post' action="{{ route('admin.roles.destroy', $role) }}">
+                        @csrf
+                        @method('DELETE')
                     </form>
 
                 </div>
